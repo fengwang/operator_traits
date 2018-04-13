@@ -7,15 +7,29 @@
 
 namespace operator_detection
 {
-
-template< typename, typename = void >
+template< typename, typename = void, typename = void >
 struct has_assignment : std::false_type{};
 
+template< typename T, typename U >
+struct has_assignment< T, U, std::void_t<decltype( std::declval<T&>() = std::declval<U const&>() )> > : std::true_type{};
+
 template< typename T >
-struct has_assignment< T, std::void_t<decltype( std::declval<T&>() = std::declval<T const&>() )> > : std::true_type{};
+struct has_assignment< T, void, std::void_t<decltype( std::declval<T&>() = std::declval<T const&>() )> > : std::true_type{};
 
 template< class T >
 inline constexpr bool has_assignment_v = has_assignment<T>::value;
+
+template< class T, class U >
+inline constexpr bool has_assignment_v2 = has_assignment<T,U>::value;
+
+template< typename, typename = void >
+struct has_move_assignment : std::false_type{};
+
+template< typename T >
+struct has_move_assignment< T, std::void_t<decltype( std::declval<T&>() = std::declval<T&&>() )> > : std::true_type{};
+
+template< class T >
+inline constexpr bool has_move_assignment_v = has_move_assignment<T>::value;
 
 template< typename, typename = void >
 struct has_addition : std::false_type{};
@@ -349,6 +363,10 @@ struct has_istream< T, std::void_t<decltype(  std::declval<std::istream&>()  >> 
 
 template< class T >
 inline constexpr bool has_istream_v = has_istream<T>::value;
+
+
+
+
 
 }//namespace operator detection
 

@@ -6,6 +6,7 @@ void test()
 {
     using namespace operator_detection;
     std::cout << "a=b : " << has_assignment_v<T> << std::endl;
+    std::cout << "a=std::move(b) : " << has_move_assignment_v<T> << std::endl;
     std::cout << "a+b : " << has_addition_v<T> << std::endl;
     std::cout << "a-b : " << has_subtraction_v<T> << std::endl;
     std::cout << "+a : " << has_unary_plus_v<T> << std::endl;
@@ -49,16 +50,30 @@ void test()
 
 struct dummy{ };
 
+struct tummy
+{
+    tummy( dummy const& ) {}
+};
+
+void f() {}
 
 #include <iostream>
+#include <complex>
+
 int main()
 {
     test<int>();
 
-    test<dummy>();
 
-    auto lambda = [](){};
-    test<decltype(lambda)>();
+    //auto lambda = [](){};
+    //test<decltype(lambda)>();
+
+    test<tummy>();
+
+    std::cout << "tummy = dummy : " << operator_detection::has_assignment_v2<tummy, dummy> << std::endl;
+
+
+    test<std::complex<std::complex<short>>>();
 
     return 0;
 }
