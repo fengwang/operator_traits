@@ -44,6 +44,8 @@ void test()
     std::cout << "a>>=n : " << has_bitwise_right_shift_assignment_v<T> << std::endl;
     std::cout << "O<<a : " << has_ostream_v<T> << std::endl;
     std::cout << "I>>a : " << has_istream_v<T> << std::endl;
+    std::cout << "a[0] : " << has_bracket_v<T> << std::endl;
+    std::cout << "a[0] const : " << has_const_bracket_v<T> << std::endl;
     std::cout << std::endl;
 }
 
@@ -57,6 +59,22 @@ struct tummy
 
 void f() {}
 
+struct uummy
+{
+    dummy operator[](int)
+    {
+        return {};
+    }
+};
+
+struct vummy
+{
+    uummy operator[](int) const
+    {
+        return {};
+    }
+};
+
 #include <iostream>
 #include <complex>
 
@@ -68,12 +86,16 @@ int main()
     //auto lambda = [](){};
     //test<decltype(lambda)>();
 
-    test<tummy>();
+    //test<tummy>();
 
-    std::cout << "tummy = dummy : " << operator_detection::has_assignment_v2<tummy, dummy> << std::endl;
+    //std::cout << "tummy = dummy : " << operator_detection::has_assignment_v2<tummy, dummy> << std::endl;
 
 
     test<std::complex<std::complex<short>>>();
+
+    test<uummy>();
+
+    test<vummy>();
 
     return 0;
 }
