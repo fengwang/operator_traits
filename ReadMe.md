@@ -50,6 +50,9 @@ void test()
     std::cout << "a>>=n : " << has_bitwise_right_shift_assignment_v<T> << std::endl;
     std::cout << "O<<a : " << has_ostream_v<T> << std::endl;
     std::cout << "I>>a : " << has_istream_v<T> << std::endl;
+    std::cout << "a[0] : " << has_bracket_v<T> << std::endl;
+    std::cout << "a[0] const : " << has_const_bracket_v<T> << std::endl;
+
     std::cout << std::endl;
 }
 
