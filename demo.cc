@@ -80,22 +80,37 @@ struct vummy
 
 int main()
 {
+    std::cout << "Testing type bool:\n";
+    test<bool>();
+
+    std::cout << "Testing type int:\n";
     test<int>();
 
+    std::cout << "Testing type lambda([](){}):\n";
+    auto lambda = [](){};
+    test<decltype(lambda)>();
 
-    //auto lambda = [](){};
-    //test<decltype(lambda)>();
+    std::cout << "Testing type lambda([=](){}):\n";
+    auto mambda = [=](){};
+    test<decltype(mambda)>();
 
-    //test<tummy>();
+    std::cout << "Testing type void(*)():\n";
+    test<void(*)()>();
 
-    //std::cout << "tummy = dummy : " << operator_detection::has_assignment_v2<tummy, dummy> << std::endl;
-
-
+    std::cout << "Testing type complex<cmplex<short>>:\n";
     test<std::complex<std::complex<short>>>();
 
+    std::cout << "Testing type dummy:\n";
+    test<dummy>();
+
+    std::cout << "Testing type uummy:\n";
     test<uummy>();
 
+    std::cout << "Testing type vummy:\n";
     test<vummy>();
+
+    std::cout << "Testing type std::ostream&:\n";
+    test<decltype(std::cout)>();
 
     return 0;
 }
