@@ -156,13 +156,13 @@ template< class T >
 inline constexpr bool has_not_equal_to_v = has_not_equal_to<T>::value;
 
 template< typename, typename = void >
-struct has_greate_than : std::false_type {};
+struct has_greater_than : std::false_type {};
 
 template< typename T >
-struct has_greate_than< T, std::void_t<decltype( std::declval<T const&>() > std::declval<T const&>() )> > : std::true_type {};
+struct has_greater_than< T, std::void_t<decltype( std::declval<T const&>() > std::declval<T const&>() )> > : std::true_type {};
 
 template< class T >
-inline constexpr bool has_greate_than_v = has_greate_than<T>::value;
+inline constexpr bool has_greater_than_v = has_greater_than<T>::value;
 
 template< typename, typename = void >
 struct has_less_than : std::false_type {};

@@ -70,7 +70,7 @@ void test()
     std::cout << "a-- : " << has_postfix_decrement_v<T> << std::endl;
     std::cout << "a==b : " << has_equal_to_v<T> << std::endl;
     std::cout << "a!=b : " << has_not_equal_to_v<T> << std::endl;
-    std::cout << "a>b : " << has_greate_than_v<T> << std::endl;
+    std::cout << "a>b : " << has_greater_than_v<T> << std::endl;
     std::cout << "a<b : " << has_less_than_v<T> << std::endl;
     std::cout << "a>=b : " << has_greater_than_or_equal_to_v<T> << std::endl;
     std::cout << "a<=b : " << has_less_than_or_equal_to_v<T> << std::endl;

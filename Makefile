@@ -1,4 +1,4 @@
-appname := operator_detect_demo
+appname := demo_operator_traits
 
 CXX := g++
 CXXFLAGS := -std=c++17 -Wall
