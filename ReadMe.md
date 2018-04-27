@@ -1,78 +1,149 @@
-#### Detecting if an operator exists or not at compile time
+## <operator\_traits.hpp>
+
+A single header file to heck if an [operator](https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B) defined or not.
 
 
-Example Usage:
+### Type categories 
+
+
+| type category  | function  | comment  |
+|---|---|---|
+|  [has_assignment](#has-assignment) | checks if `operato =(T const)` exist or not  |   |
+|  [has_move_assignment](#has-move-assignment) | checks if `operator=(T&&)` exist or not  |   |
+|  [has_addition](#has-addition) | checks if `T + T` exist or not  |   |
+|   |   |   |
+
+#### `has_addition`
 
 ```cpp
+template<typename T>
+struct has_addition;
+```
 
-#include "operator_detection.hpp"
+Checks if 'auto operator + (T const&, T const&)' exists or not.
 
+
+##### Helper variable template `has_addition_v`
+
+```cpp
+template< class T >
+inline constexpr bool has_addition_v = has_addition<T>::value;
+```
+
+
+##### Example
+
+```cpp
+#include "operator_traits.hpp"
 #include <iostream>
-template< typename T >
-void test()
-{
-    using namespace operator_detection;
-    std::cout << "a=b : " << has_assignment_v<T> << std::endl;
-    std::cout << "a+b : " << has_addition_v<T> << std::endl;
-    std::cout << "a-b : " << has_subtraction_v<T> << std::endl;
-    std::cout << "+a : " << has_unary_plus_v<T> << std::endl;
-    std::cout << "-a : " << has_unary_minus_v<T> << std::endl;
-    std::cout << "a*b : " << has_multiplication_v<T> << std::endl;
-    std::cout << "a/b : " << has_division_v<T> << std::endl;
-    std::cout << "a%b : " << has_modulo_v<T> << std::endl;
-    std::cout << "++a : " << has_prefix_increment_v<T> << std::endl;
-    std::cout << "a++ : " << has_postfix_increment_v<T> << std::endl;
-    std::cout << "--a : " << has_prefix_decrement_v<T> << std::endl;
-    std::cout << "a-- : " << has_postfix_decrement_v<T> << std::endl;
-    std::cout << "a==b : " << has_equal_to_v<T> << std::endl;
-    std::cout << "a!=b : " << has_not_equal_to_v<T> << std::endl;
-    std::cout << "a>b : " << has_greate_than_v<T> << std::endl;
-    std::cout << "a<b : " << has_less_than_v<T> << std::endl;
-    std::cout << "a>=b : " << has_greater_than_or_equal_to_v<T> << std::endl;
-    std::cout << "a<=b : " << has_less_than_or_equal_to_v<T> << std::endl;
-    std::cout << "!a : " << has_logical_not_v<T> << std::endl;
-    std::cout << "a&&b : " << has_logical_and_v<T> << std::endl;
-    std::cout << "a||b : " << has_logical_or_v<T> << std::endl;
-    std::cout << "~a : " << has_bitwise_not_v<T> << std::endl;
-    std::cout << "a&b : " << has_bitwise_and_v<T> << std::endl;
-    std::cout << "a|b : " << has_bitwise_or_v<T> << std::endl;
-    std::cout << "a^b : " << has_bitwise_xor_v<T> << std::endl;
-    std::cout << "a<<n : " << has_bitwise_left_shift_v<T> << std::endl;
-    std::cout << "a>>n : " << has_bitwise_right_shift_v<T> << std::endl;
-    std::cout << "a+=b : " << has_addition_assignment_v<T> << std::endl;
-    std::cout << "a-=b : " << has_subtraction_assignment_v<T> << std::endl;
-    std::cout << "a*=b : " << has_multiplication_assignment_v<T> << std::endl;
-    std::cout << "a/=b : " << has_division_assignment_v<T> << std::endl;
-    std::cout << "a%=b : " << has_modulo_assignment_v<T> << std::endl;
-    std::cout << "a&=b : " << has_bitwise_and_assignment_v<T> << std::endl;
-    std::cout << "a|=b : " << has_bitwise_or_assignment_v<T> << std::endl;
-    std::cout << "a<<=n : " << has_bitwise_left_shift_assignment_v<T> << std::endl;
-    std::cout << "a>>=n : " << has_bitwise_right_shift_assignment_v<T> << std::endl;
-    std::cout << "O<<a : " << has_ostream_v<T> << std::endl;
-    std::cout << "I>>a : " << has_istream_v<T> << std::endl;
-    std::cout << "a[0] : " << has_bracket_v<T> << std::endl;
-    std::cout << "a[0] const : " << has_const_bracket_v<T> << std::endl;
 
-    std::cout << std::endl;
-}
-
-
-struct dummy{ };
-
-
-#include <iostream>
 int main()
 {
-    test<int>();
+	std::cout << std::boolalpha;
+	std::cout << "void: " << operator_traits::has_addition<void>::value << std::endl;
+	std::cout << "bool: " << operator_traits::has_addition_v<bool> << std::endl;
+	std::cout << "char: " << operator_traits::has_addition<char>::value << std::endl;
+	std::cout << "int: " << operator_traits::has_addition_v<int> << std::endl;
+	std::cout << "double: " << operator_traits::has_addition<double>::value << std::endl;
+	std::cout << "void(*)(): " << operator_traits::has_addition_v<void(*)()> << std::endl;
+	return 0;
+}
+```
 
-    test<dummy>();
 
-    auto lambda = [](){};
-    test<decltype(lambda)>();
 
-    return 0;
+
+#### `has_move_assignment`
+
+```cpp
+template<typename T, typename U> 
+struct has_move_assignment;
+
+template<typename T>
+struct has_move_assignment;
+```
+
+Checks if `auto T::operator=(U&&)` or `auto T::operator=(T&&)` exist or not.
+
+#####  Helper variable template `has_move_assignment_v` and `has_move_assignment_v2`
+
+```cpp
+template< class T >
+inline constexpr bool has_move_assignment_v = has_move_assignment<T>::value;
+
+template< class T, class U >
+inline constexpr bool has_move_assignment_v2 = has_move_assignment<T, U>::value;
+```
+
+#### Example
+
+```
+#include "operator_traits.hpp"
+#include <iostream>
+
+struct S{};
+struct T
+{
+T& operator =(T&&) = delete;
+T& operator =(S&&) { return *this; }
+};
+
+int main()
+{
+	std::cout << std::boolalpha;
+	std::cout << operator_traits::has_move_assignment<S>::value << std::endl; //true
+	std::cout << operator_traits::has_move_assignment_v<T> << std::endl; //false
+	std::cout << operator_traits::has_move_assignment<S, T>::value << std::endl; //false
+	std::cout << operator_traits::has_move_assignment_v2<T, S> << std::endl; //true
+	return 0;
 }
 
 ```
 
 
+#### `has_assignment`
+
+```cpp
+template<typename T, typename U> 
+struct has_assignment;
+
+template<typename T>
+struct has_assignment;
+```
+
+Checks if `auto T::operator=(T const&)` or `auto T::operator=(T const&)` exist or not.
+
+#####  Helper variable template `has_assignment_v` and `has_assignment_v2`
+
+```cpp
+template< class T >
+inline constexpr bool has_assignment_v = has_assignment<T>::value;
+
+template< class T, class U >
+inline constexpr bool has_assignment_v2 = has_assignment<T, U>::value;
+```
+
+#### Example
+
+```
+#include "operator_traits.hpp"
+#include <iostream>
+
+struct S{};
+struct T
+{
+T& operator =(T const&) = delete;
+T& operator =(S const&) { return *this; }
+};
+
+int main()
+{
+	std::cout << std::boolalpha;
+	std::cout << operator_traits::has_assignment<S>::value << std::endl; //true
+	std::cout << operator_traits::has_assignment_v<T> << std::endl; //false
+	std::cout << operator_traits::has_assignment<S, T>::value << std::endl; //false
+	std::cout << operator_traits::has_assignment_v2<T, S> << std::endl; //true
+	return 0;
+}
+
+```

@@ -1,12 +1,13 @@
-#ifndef _OPERATOR_DETECTION_HPP_INCLUDED_OJISDFLJASOIJ498UAFDKLJ489UALFKJALDFKJF
-#define _OPERATOR_DETECTION_HPP_INCLUDED_OJISDFLJASOIJ498UAFDKLJ489UALFKJALDFKJF
+#ifndef _OPERATOR_TRAITS_HPP_INCLUDED_OJISDFLJASOIJ498UAFDKLJ489UALFKJALDFKJF
+#define _OPERATOR_TRAITS_HPP_INCLUDED_OJISDFLJASOIJ498UAFDKLJ489UALFKJALDFKJF
 
 #include <type_traits>
 #include <utility>
 #include <iostream>
 
-namespace operator_detection
+namespace operator_traits
 {
+
 template< typename, typename = void, typename = void >
 struct has_assignment : std::false_type {};
 
@@ -22,14 +23,20 @@ inline constexpr bool has_assignment_v = has_assignment<T>::value;
 template< class T, class U >
 inline constexpr bool has_assignment_v2 = has_assignment<T, U>::value;
 
-template< typename, typename = void >
+template< typename, typename = void, typename = void >
 struct has_move_assignment : std::false_type {};
 
+template< typename T, typename U >
+struct has_move_assignment< T, U, std::void_t<decltype( std::declval<T&>() = std::declval<U&&>() )>> : std::true_type {};
+
 template< typename T >
-struct has_move_assignment < T, std::void_t < decltype( std::declval<T&>() = std::declval < T && > () ) > > : std::true_type {};
+struct has_move_assignment< T, void, std::void_t<decltype( std::declval<T&>() = std::declval<T&&>() )>> : std::true_type {};
 
 template< class T >
 inline constexpr bool has_move_assignment_v = has_move_assignment<T>::value;
+
+template< class T, class U >
+inline constexpr bool has_move_assignment_v2 = has_move_assignment<T, U>::value;
 
 template< typename, typename = void >
 struct has_addition : std::false_type {};
@@ -384,5 +391,5 @@ inline constexpr bool has_const_bracket_v = has_const_bracket<T>::value;
 
 }//namespace operator detection
 
-#endif//_OPERATOR_DETECTION_HPP_INCLUDED_OJISDFLJASOIJ498UAFDKLJ489UALFKJALDFKJF
+#endif//_OPERATOR_TRAITS_HPP_INCLUDED_OJISDFLJASOIJ498UAFDKLJ489UALFKJALDFKJF
 

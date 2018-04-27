@@ -1,10 +1,60 @@
-#include "operator_detection.hpp"
+#include "operator_traits.hpp"
 
 #include <iostream>
+
+void test_addition()
+{
+	std::cout << std::boolalpha;
+	std::cout << operator_traits::has_addition<void>::value << std::endl;
+	std::cout << operator_traits::has_addition_v<void> << std::endl;
+	std::cout << operator_traits::has_addition<bool>::value << std::endl;
+	std::cout << operator_traits::has_addition_v<bool> << std::endl;
+	std::cout << operator_traits::has_addition<char>::value << std::endl;
+	std::cout << operator_traits::has_addition_v<char> << std::endl;
+	std::cout << operator_traits::has_addition<int>::value << std::endl;
+	std::cout << operator_traits::has_addition_v<int> << std::endl;
+	std::cout << operator_traits::has_addition<double>::value << std::endl;
+	std::cout << operator_traits::has_addition_v<double> << std::endl;
+	std::cout << operator_traits::has_addition<void(*)()>::value << std::endl;
+	std::cout << operator_traits::has_addition_v<void(*)()> << std::endl;
+}
+
+void test_assignment()
+{
+	struct S{};
+	struct T
+	{
+		T& operator =(T const&) = delete;
+		T& operator =(S const&) { return *this; }
+	};
+
+	std::cout << std::boolalpha;
+	std::cout << operator_traits::has_assignment<S>::value << std::endl;
+	std::cout << operator_traits::has_assignment_v<T> << std::endl;
+	std::cout << operator_traits::has_assignment<S, T>::value << std::endl;
+	std::cout << operator_traits::has_assignment_v2<T, S> << std::endl;
+}
+
+void test_move_assignment()
+{
+	struct S{};
+	struct T
+	{
+		T& operator =(T&&) = delete;
+		T& operator =(S&&) { return *this; }
+	};
+
+	std::cout << std::boolalpha;
+	std::cout << operator_traits::has_move_assignment<S>::value << std::endl;
+	std::cout << operator_traits::has_move_assignment_v<T> << std::endl;
+	std::cout << operator_traits::has_move_assignment<S, T>::value << std::endl;
+	std::cout << operator_traits::has_move_assignment_v2<T, S> << std::endl;
+}
+
 template< typename T >
 void test()
 {
-    using namespace operator_detection;
+    using namespace operator_traits;
     std::cout << "a=b : " << has_assignment_v<T> << std::endl;
     std::cout << "a=std::move(b) : " << has_move_assignment_v<T> << std::endl;
     std::cout << "a+b : " << has_addition_v<T> << std::endl;
@@ -80,6 +130,9 @@ struct vummy
 
 int main()
 {
+    std::cout << "Testing assignment:\n";
+    test_assignment();
+
     std::cout << "Testing type bool:\n";
     test<bool>();
 
@@ -111,6 +164,16 @@ int main()
 
     std::cout << "Testing type std::ostream&:\n";
     test<decltype(std::cout)>();
+
+    std::cout << "Testing assignment:\n";
+    test_assignment();
+
+    std::cout << "Testing move assignment:\n";
+    test_move_assignment();
+
+    std::cout << "Testing addition:\n";
+    test_addition();
+
 
     return 0;
 }
