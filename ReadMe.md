@@ -10,7 +10,7 @@ A single header file to heck if an [operator](https://en.wikipedia.org/wiki/Oper
 |---|---|---|
 |  [has_assignment](#has_assignment) | checks if `auto operato =(T const)` exist or not  |   |
 |  [has_move_assignment](#has_move_assignment) | checks if `auto operator=(T&&)` exist or not  |   |
-|  [has_addition](#has_addition) | checks if `auto operator + (T const&, T const&)` exist or not  |   |
+|  [has_addition](#has_addition) | checks if `a+b` exist or not  |   |
 |  [has_subtraction](#has_subtraction) | checks if `a - b` exist or not  |   |
 |  [has_unary_plus](#has_unary_plus) | checks if `+a` exist or not  |   |
 |  [has_unary_minus](#has_unary_minus) | checks if `-a` exist or not  |   |
@@ -29,10 +29,10 @@ A single header file to heck if an [operator](https://en.wikipedia.org/wiki/Oper
 |  [has_less_than_or_equal_to](#has_less_than_or_equal_to) | checks if `a<=b` exist or not  |   |
 |  [has_logical_not](#has_logical_not) | checks if `!a` exist or not  |   |
 |  [has_logical_and](#has_logical_and) | checks if `a&&b` exist or not  |   |
-|  [has_logical_or](#has_logical_or) | checks if `a||b` exist or not  |   |
+|  [has_logical_or](#has_logical_or) | checks if <code>a\|\|b</code> exist or not  |   |
 |  [has_bitwise_not](#has_bitwise_not) | checks if `~a` exist or not  |   |
 |  [has_bitwise_and](#has_bitwise_and) | checks if `a&b` exist or not  |   |
-|  [has_bitwise_or](#has_bitwise_or) | checks if `a|b` exist or not  |   |
+|  [has_bitwise_or](#has_bitwise_or) | checks if <code>a\|b</code> exist or not  |   |
 |  [has_bitwise_xor](#has_bitwise_xor) | checks if `a^b` exist or not  |   |
 |  [has_bitwise_left_shift](#has_bitwise_left_shift) | checks if `a<<N` exist or not  |   |
 |  [has_bitwise_right_shift](#has_bitwise_right_shift) | checks if `a>>N` exist or not  |   |
@@ -42,7 +42,7 @@ A single header file to heck if an [operator](https://en.wikipedia.org/wiki/Oper
 |  [has_division_assignment](#has_division_assignment) | checks if `a/=b` exist or not  |   |
 |  [has_modulo_assignment](#has_modulo_assignment) | checks if `a%=b` exist or not  |   |
 |  [has_bitwise_and_assignment](#has_bitwise_and_assignment) | checks if `a&=b` exist or not  |   |
-|  [has_bitwise_or_assignment](#has_bitwise_or_assignment) | checks if `a|=b` exist or not  |   |
+|  [has_bitwise_or_assignment](#has_bitwise_or_assignment) | checks if <code>a\|=b</code> exist or not  |   |
 |  [has_bitwise_leftshift_assignment](#has_bitwise_leftshift_assignment) | checks if `a<<=N` exist or not  |   |
 |  [has_bitwise_rightshift_assignment](#has_bitwise_rightshift_assignment) | checks if `a>>=N` exist or not  |   |
 |  [has_ostream](#has_ostream) | checks if `std::cout<<a` exist or not  |   |
