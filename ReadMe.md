@@ -1,6 +1,6 @@
 # operator\_traits
 
-A single header file to heck if an [operator](https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B) defined or not.
+A single header file to check if an [operator](https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B) exist or not.
 
 
 ## Type categories 
