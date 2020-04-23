@@ -1,9 +1,11 @@
 # operator\_traits
 
-A single header file to check if an [operator](https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B) exist or not.
+----
+
+This is a single C++ header library to check if an [operator](https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B) exist or not.
 
 
-## Type categories 
+## Type categories
 
 
 | type category  | function  | comment  |
@@ -59,7 +61,7 @@ template<typename T>
 struct has_addition;
 ```
 
-Checks if 'auto operator + (T const&, T const&)' exists or not.
+Checks if `auto operator + (T const&, T const&)` exists or not.
 
 
 ### Helper variable template `has_addition_v`
@@ -95,7 +97,7 @@ int main()
 ## `has_move_assignment`
 
 ```cpp
-template<typename T, typename U> 
+template<typename T, typename U>
 struct has_move_assignment;
 
 template<typename T>
@@ -143,7 +145,7 @@ int main()
 ## `has_assignment`
 
 ```cpp
-template<typename T, typename U> 
+template<typename T, typename U>
 struct has_assignment;
 
 template<typename T>
